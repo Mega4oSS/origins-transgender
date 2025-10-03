@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "originstransgender",
+  "version": "${version}",
+  "name": "OriginsTransgender",
+  "description": "Adding new ritual for changing origin, add some lore",
+  "authors": ["Mega4oSS", "KevstaRU"],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/originstransgender/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "ru.alaverdyan.artem.originstransgender.client.OriginstransgenderDataGenerator"
+    ],
+    "main": [
+      "ru.alaverdyan.artem.originstransgender.Originstransgender"
+    ],
+    "client": [
+      "ru.alaverdyan.artem.originstransgender.client.OriginstransgenderClient"
+    ]
+  },
+  "mixins": [
+    "originstransgender.mixins.json",
+    {
+      "config": "originstransgender.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "origins": ">=1.10.0",
+    "apoli": ">=2.9.0",
+    "cardinal-components-base": ">=5.1.0",
+    "cardinal-components-entity": ">=5.1.0",
+    "cloth-config": ">=10.0.96",
+    "reach-entity-attributes": ">=2.4.0",
+    "create": ">=0.5.1-j-build.1609+mc1.20.1",
+    "minecraft": "${minecraft_version}"
+  },
+  "suggests": {
+    "modmenu": ">=7.1.0"
+  }
+}

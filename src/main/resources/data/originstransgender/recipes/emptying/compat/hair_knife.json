@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "wooden_custom_fence_gate",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "pattern": [
+    " W",
+    "# "
+  ],
+  "result": {
+    "item": "originstransgender:hair_knife"
+  },
+  "show_notification": true
+}

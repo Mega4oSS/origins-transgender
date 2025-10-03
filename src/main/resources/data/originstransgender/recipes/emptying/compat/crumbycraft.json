@@ -1,0 +1,34 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "C": {
+      "item": "create:sturdy_sheet"
+    },
+    "S": {
+      "item": "minecraft:silence_armor_trim_smithing_template"
+    },
+    "H": {
+      "item": "minecraft:host_armor_trim_smithing_template"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "B": {
+      "item": "minecraft:netherite_block"
+    },
+    "M": {
+      "item": "minecraft:music_disc_5"
+    }
+  },
+  "pattern": [
+    "  C  ",
+    " CSC ",
+    "CBNBC",
+    " CHC ",
+    "  M  "
+  ],
+  "result": {
+    "item": "originstransgender:empty_sphere"
+  }
+}

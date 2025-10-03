@@ -1,0 +1,25 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "C": {
+      "item": "create:polished_rose_quartz"
+    },
+    "S": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "H": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "HCCH",
+    " HH ",
+    " SS ",
+    " SS ",
+    "SSSS"
+  ],
+  "result": {
+    "item": "originstransgender:ritual_pedestal"
+  }
+}

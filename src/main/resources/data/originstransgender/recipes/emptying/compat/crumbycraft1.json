@@ -1,0 +1,29 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "C": {
+      "item": "create:polished_rose_quartz"
+    },
+    "S": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "H": {
+      "item": "create:precision_mechanism"
+    },
+    "N": {
+      "item": "minecraft:ancient_debris"
+    }
+  },
+  "pattern": [
+    "C  C",
+    "SCCS",
+    " HH ",
+    " NN ",
+    " HH ",
+    "SSSS"
+  ],
+  "result": {
+    "item": "originstransgender:ritual_table"
+  }
+}

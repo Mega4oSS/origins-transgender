@@ -1,0 +1,28 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "superheated",
+  "ingredients": [
+    {
+      "amount": 3,
+      "item": "create:golden_sheet"
+    },
+    {
+      "item": "create:experience_block"
+    },
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "amount": 6,
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "minecraft:prismarine_crystals"
+    }
+  ],
+  "results": [
+    {
+      "item": "originstransgender:soul_sphere"
+    }
+  ]
+}

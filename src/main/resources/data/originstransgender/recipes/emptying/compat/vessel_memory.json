@@ -1,0 +1,18 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:decorated_pot"
+    },
+    {
+      "amount": 80000,
+      "fluid": "originstransgender:memory_thread",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "originstransgender:vessel_memory"
+    }
+  ]
+}
