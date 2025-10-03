@@ -24,13 +24,13 @@ public class OTBlocks {
     public static final Block RITUAL_TABLE = register(
             "ritual_table",
             RitualTableBlock::new,
-            AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).hardness(2f),
+            AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).hardness(2f).requiresTool(),
             true
     );
     public static final Block RITUAL_PEDESTAL = register(
             "ritual_pedestal",
             RitualPedestalBlock::new,
-            AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).hardness(2f),
+            AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).hardness(2f).requiresTool(),
             true
     );
     public static final Identifier RITUAL_BLOCK_ID = new Identifier("origins-transgender", "ritual_table");
