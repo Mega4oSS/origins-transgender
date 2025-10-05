@@ -15,7 +15,6 @@ public class OTFluids {
     public static FlowableFluid STILL_MEMORY_THREAD = Registry.register(Registries.FLUID, new Identifier(Originstransgender.MOD_ID, "memory_thread"), new MemoryThreadFluid.Still());
     public static FlowableFluid FLOWING_MEMORY_THREAD = Registry.register(Registries.FLUID, new Identifier(Originstransgender.MOD_ID, "flowing_memory_thread"), new MemoryThreadFluid.Flowing());
 
-    // Block representing the fluid in-world
     public static Block MEMORY_THREAD_BLOCK = Registry.register(Registries.BLOCK, new Identifier(Originstransgender.MOD_ID, "memory_thread"),
                 new FluidBlock(STILL_MEMORY_THREAD, FabricBlockSettings.copy(Blocks.WATER)) {});
 

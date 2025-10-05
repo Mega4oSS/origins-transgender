@@ -10,6 +10,6 @@ public class OTParticles {
     public static final DefaultParticleType RED_DUST = FabricParticleTypes.simple();
 
     public static void register() {
-        Registry.register(Registries.PARTICLE_TYPE, new Identifier("origins-transgender", "red_dust"), RED_DUST);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier("originstransgender", "red_dust"), RED_DUST);
     }
 }

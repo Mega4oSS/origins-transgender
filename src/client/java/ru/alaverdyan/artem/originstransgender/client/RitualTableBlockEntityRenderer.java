@@ -23,7 +23,7 @@ public class RitualTableBlockEntityRenderer implements BlockEntityRenderer<Ritua
     private static final float CENTER_RISE_HEIGHT = 1.5f;
     private static final float PEDESTAL_RISE_HEIGHT = 1.0f;
     private static final float CENTER_SPIRAL_RADIUS = 0.5f;
-    private static final float CENTER_ROTATION_SPEED = 360f; // градусов в секунду
+    private static final float CENTER_ROTATION_SPEED = 360f;
     private static final float PEDESTAL_ROTATION_SPEED = 45f;
     private static final int STAGE2_DURATION = 60;
 
@@ -39,34 +39,28 @@ public class RitualTableBlockEntityRenderer implements BlockEntityRenderer<Ritua
         World world = entity.getWorld();
         if (world == null) return;
 
-        // Подготовка рендеринга: пушим матрицу
         matrices.push();
 
-        // Получим параметры освещения над столом
         int lightAbove = WorldRenderer.getLightmapCoordinates(world, entity.getPos().up());
 
-        // Исходное смещение: центр стола
         matrices.translate(0.5f, 1.0f, 0.5f);
 
         if (stage == 2) {
-            // Этап 2: Подъем центрального предмета
-            float progress = (t + tickDelta) / (STAGE2_DURATION / 2f); // 0..1 за 30 тиков
+            float progress = (t + tickDelta) / (STAGE2_DURATION / 2f);
             progress = Math.min(progress, 1f);
-            float angle = (t + tickDelta) * CENTER_ROTATION_SPEED / 20f; // градусы
+            float angle = (t + tickDelta) * CENTER_ROTATION_SPEED / 20f;
             float radius = CENTER_SPIRAL_RADIUS;
             float dy = progress * CENTER_RISE_HEIGHT;
             float dx = (float)Math.cos(Math.toRadians(angle)) * radius;
             float dz = (float)Math.sin(Math.toRadians(angle)) * radius;
             matrices.translate(dx, dy, dz);
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(angle));
-            // Рисуем центральный предмет
             ItemStack centerStack = entity.getStack(0);
             MinecraftClient.getInstance().getItemRenderer().renderItem(centerStack, ModelTransformationMode.FIXED, lightAbove,
                     OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, world, 0);
         }
         else if (stage == 4) {
-            // Этап 4: Появление нового предмета (масштаб)
-            float progress = (t + tickDelta) / 50f; // 0..1 за 50 тиков
+            float progress = (t + tickDelta) / 50f;
             float scale = Math.min(progress, 1f);
             matrices.scale(scale, scale, scale);
             ItemStack centerStack = entity.getStack(0);
@@ -74,7 +68,6 @@ public class RitualTableBlockEntityRenderer implements BlockEntityRenderer<Ritua
                     OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, world, 0);
         }
         else if (stage == 5) {
-            // Этап 5: Пульсация центрального предмета
             float baseScale = 1.0f;
             float pulse = 0.05f * (float)Math.sin((t + tickDelta) / 5.0f);
             float scale = baseScale + pulse;
@@ -84,24 +77,19 @@ public class RitualTableBlockEntityRenderer implements BlockEntityRenderer<Ritua
                     OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, world, 0);
         }
         else if (stage == 6) {
-            // Этап 6: Коллапс (снижение масштаба до 0)
-            float scale = 1.0f - (t + tickDelta) / 20f; // 0..1 за 20 тиков
+            float scale = 1.0f - (t + tickDelta) / 20f;
             scale = Math.max(scale, 0f);
             matrices.scale(scale, scale, scale);
             ItemStack centerStack = entity.getStack(0);
             MinecraftClient.getInstance().getItemRenderer().renderItem(centerStack, ModelTransformationMode.FIXED, lightAbove,
                     OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, world, 0);
         }
-        // Другие этапы (1,3,7) здесь обрабатываются вне BER или не рисуют центральный предмет.
-        // Ставим в центр блока
         matrices.translate(0.5f, 1.15f, 0.5f);
         matrices.scale(0.5f, 0.5f, 0.5f);
 
 
-        // Поворачиваем, чтобы предмет лежал на столе
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
 
-        // Центрируем предмет относительно модели (GROUND трансформация рисует от угла)
 
         ItemStack centerStack = entity.getStack(0);
 
@@ -126,15 +114,13 @@ public class RitualTableBlockEntityRenderer implements BlockEntityRenderer<Ritua
         if (!stack.isEmpty() && !entity.isTableEmpty()) {
             matrices.push();
 
-            // Ставим в центр блока
             matrices.translate(0.5f, 1.15f, 0.5f);
             matrices.scale(0.5f, 0.5f, 0.5f);
 
 
-            // Поворачиваем, чтобы предмет лежал на столе
             if(entity.isAnimationStarted()) {
                 double now = org.lwjgl.glfw.GLFW.glfwGetTime();
-                float delta = (float) (now - entity.getLastTime()); // секунды, обычно 0.001..0.05 и т.д.
+                float delta = (float) (now - entity.getLastTime());
                 entity.setLastTime(now);
                 entity.setDeltaTime(entity.getDeltaTime() + delta);
                 //float secs = ticksToSeconds(entity.getDeltaTimeStart());
@@ -147,8 +133,6 @@ public class RitualTableBlockEntityRenderer implements BlockEntityRenderer<Ritua
             } else {
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
             }
-
-            // Центрируем предмет относительно модели (GROUND трансформация рисует от угла)
 
             int lightAbove = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
             MinecraftClient.getInstance().getItemRenderer().renderItem(

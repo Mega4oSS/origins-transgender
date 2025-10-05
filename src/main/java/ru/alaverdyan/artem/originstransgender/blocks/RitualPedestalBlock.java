@@ -51,7 +51,6 @@ public class RitualPedestalBlock extends BlockWithEntity {
         ItemStack held = player.getStackInHand(hand);
 
         if (!world.isClient) {
-            // Положить предмет (игрок не в Shift и держит предмет, стол пуст)
             if (!player.isSneaking() && !held.isEmpty() && tableEntity.isEmpty()) {
                 tableEntity.getItems().set(0, held.split(1));
                 tableEntity.setTableEmpty(false);
@@ -59,7 +58,6 @@ public class RitualPedestalBlock extends BlockWithEntity {
                 world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
                 return ActionResult.SUCCESS;
             }
-            // Забрать предмет (игрок в Shift и стол не пуст)
             if (player.isSneaking() && held.isEmpty() && !tableEntity.isEmpty()) {
                 ItemStack stack = tableEntity.removeStack(0);
                 tableEntity.setTableEmpty(true);
@@ -78,7 +76,6 @@ public class RitualPedestalBlock extends BlockWithEntity {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof RitualPedestalBlockEntity tableEntity) {
-                // Сброс предмета при разрушении
                 if(tableEntity.isAnimationStarted()) return;
                 ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), tableEntity.removeStack(0));
             }

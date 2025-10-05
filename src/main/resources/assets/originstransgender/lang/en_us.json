@@ -24,9 +24,15 @@
   "msg.losthelmet": "Oops. Your helmet slipped off your head.",
   "effect.originstransgender.baldness": "Baldness",
   "effect.originstransgender.shadow_game": "Feeling strange",
+  "block.originstransgender.umbralith": "Umbralith",
+  "item.minecraft.potion.effect.sins_oblivion": "Sins Oblivion Potion",
+  "item.minecraft.splash_potion.effect.sins_oblivion": "Sins Oblivion Splash Potion",
+  "item.minecraft.lingering_potion.effect.sins_oblivion": "Sins Oblivion Lingering Potion",
+  "effect.originstransgender.sins_oblivion": "Sins oblivion",
   "msg.reality_warp": "You feel a strange headache and blurred vision...",
   "msg.message_sended": "Message sent to targeted player(s).",
   "msg.effect_applied": "Applied hallucinations to all online players.",
   "msg.effect_failed": "Failed to apply hallucinations to all players.",
-  "msg.effect_targeted_applied": "Applied hallucinations to targeted player(s) for 15 seconds."
+  "msg.effect_targeted_applied": "Applied hallucinations to targeted player(s) for 15 seconds.",
+  "INFECTION_START_SUCCESS": "Infection start successfully"
 }

@@ -28,5 +28,11 @@
   "msg.reality_warp": "Вы чувствуете странную головную боль и помутнение в глазах...",
   "msg.effect_applied": "Всем игрокам применены глюки",
   "msg.effect_failed": "Случилась ошибка при премении глюков всем игрокам",
-  "msg.effect_targeted_applied": "Эффект выдан выбранным игрокам на 15 секукнд"
+  "msg.effect_targeted_applied": "Эффект выдан выбранным игрокам на 15 секукнд",
+  "block.originstransgender.umbralith": "Умбралит",
+  "item.minecraft.potion.effect.sins_oblivion": "Зелье забвенья грехов",
+  "item.minecraft.splash_potion.effect.sins_oblivion": "Взрывное зелье забвенья грехов",
+  "item.minecraft.lingering_potion.effect.sins_oblivion": "Туманное зелье забвенья грехов",
+  "effect.originstransgender.sins_oblivion": "Забвенье грехов",
+  "INFECTION_START_SUCCESS": "Инфекция запущена!"
 }

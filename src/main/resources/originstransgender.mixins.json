@@ -4,6 +4,7 @@
   "package": "ru.alaverdyan.artem.originstransgender.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BlockOnPlacedMixin",
     "EndermanEntityMixin"
   ],
   "injectors": {

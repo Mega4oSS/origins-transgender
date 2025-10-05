@@ -65,7 +65,6 @@ public class RitualTableBlock extends BlockWithEntity {
         ItemStack held = player.getStackInHand(hand);
 
         if (!world.isClient) {
-            // Положить предмет (игрок не в Shift и держит предмет, стол пуст)
             if (!player.isSneaking() && !held.isEmpty() && tableEntity.isEmpty()) {
                 tableEntity.getItems().set(0, held.split(1));
                 tableEntity.setTableEmpty(false);
@@ -73,7 +72,6 @@ public class RitualTableBlock extends BlockWithEntity {
                 world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
                 return ActionResult.SUCCESS;
             }
-            // Забрать предмет (игрок в Shift и стол не пуст)
             if (player.isSneaking() && held.isEmpty() && !tableEntity.isEmpty()) {
                 ItemStack stack = tableEntity.removeStack(0);
                 tableEntity.setTableEmpty(true);
@@ -96,7 +94,6 @@ public class RitualTableBlock extends BlockWithEntity {
         bec.setAnimationStarted(true);
         bec.markDirtyAndSync(world);
 
-        // Проверяем пьедесталы по осям
         BlockPos[] offsets = {
                 center.east(3),
                 center.west(3),
@@ -119,8 +116,6 @@ public class RitualTableBlock extends BlockWithEntity {
 
     public static boolean checkRitual(World world, BlockPos center, PlayerEntity player) {
         boolean hasPedestals = true;
-
-        // Проверяем пьедесталы по осям
         BlockPos[] offsets = {
                 center.east(3),
                 center.west(3),
@@ -137,7 +132,6 @@ public class RitualTableBlock extends BlockWithEntity {
 
         if (!hasPedestals) return false;
 
-        // Булены
         boolean currentRace = false;
         boolean futureRace = false;
         boolean soulSphere = false;
@@ -207,7 +201,6 @@ public class RitualTableBlock extends BlockWithEntity {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof RitualTableBlockEntity tableEntity) {
-                // Сброс предмета при разрушении
                 if(tableEntity.isAnimationStarted()) return;
                 ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), tableEntity.removeStack(0));
             }

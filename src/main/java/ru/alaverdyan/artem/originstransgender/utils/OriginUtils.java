@@ -12,17 +12,10 @@ import net.minecraft.util.Identifier;
 
 import java.util.Objects;
 
-/**
- * Простая утилита для работы с Origins через публичный API (без reflection).
- */
 public final class OriginUtils {
 
     private OriginUtils() {}
 
-    /**
-     * Установить origin игроку (синхронно, в том же потоке).
-     * Бросает IllegalArgumentException, если layerId/originId некорректны.
-     */
     public static void setPlayerOrigin(ServerPlayerEntity player, Identifier layerId, Identifier originId) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(layerId, "layerId");
@@ -44,23 +37,14 @@ public final class OriginUtils {
         }
 
         comp.setOrigin(layer, origin);
-        // обычно sync() доступен — вызываем напрямую
         comp.sync();
     }
 
-    /**
-     * Установить origin игроку, но гарантированно выполняя на серверном потоке.
-     * Используй, если вызываешь из асинхронного контекста.
-     */
     public static void setPlayerOriginAsync(MinecraftServer server, ServerPlayerEntity player, Identifier layerId, Identifier originId) {
         Objects.requireNonNull(server, "server");
         server.execute(() -> setPlayerOrigin(player, layerId, originId));
     }
 
-    /**
-     * Вернуть текущий Origin игрока для указанного слоя.
-     * Возвращает null, если компонент/слой/origin не доступны.
-     */
     public static Origin getPlayerOrigin(ServerPlayerEntity player, Identifier layerId) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(layerId, "layerId");
@@ -71,15 +55,9 @@ public final class OriginUtils {
         OriginLayer layer = OriginLayers.getLayer(layerId);
         if (layer == null) return null;
 
-        // Предполагаем, что в данной версии API есть метод getOrigin(OriginLayer).
-        // Если в твоей версии другое имя — замени на фактическое (getChosenOrigin / getSelectedOrigin и т.д.).
         return comp.getOrigin(layer);
     }
 
-    /**
-     * Установить origin по имени игрока (sync, если игрок найден).
-     * Возвращает true, если игрок найден и origin установлен.
-     */
     public static boolean setPlayerOriginByName(MinecraftServer server, String playerName, Identifier layerId, Identifier originId) {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(playerName, "playerName");
@@ -89,9 +67,6 @@ public final class OriginUtils {
         return true;
     }
 
-    /**
-     * Удобный wrapper для origins:human
-     */
     public static void setHumanOrigin(ServerPlayerEntity player) {
         setPlayerOrigin(player, new Identifier("origins", "origin"), new Identifier("origins", "human"));
     }

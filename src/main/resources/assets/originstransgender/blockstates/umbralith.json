@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"":  [
+			{ "model": "originstransgender:block/umbralith_1", "weight": 10 },
+			{ "model": "originstransgender:block/umbralith_2", "weight": 10 },
+			{ "model": "originstransgender:block/umbralith_6", "weight": 10 },
+			{ "model": "originstransgender:block/umbralith_7", "weight": 10 },
+			{ "model": "originstransgender:block/umbralith_3", "weight": 1 },
+			{ "model": "originstransgender:block/umbralith_4", "weight": 1 },
+			{ "model": "originstransgender:block/umbralith_5", "weight": 1 }
+		]
+	}
+}

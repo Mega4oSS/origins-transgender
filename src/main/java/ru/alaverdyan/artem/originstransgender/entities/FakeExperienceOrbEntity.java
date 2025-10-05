@@ -69,7 +69,7 @@ public class FakeExperienceOrbEntity extends ExperienceOrbEntity {
 
         double distance = getPos().distanceTo(target);
         if (distance <= 1) {
-            this.discard();// исчезаем
+            this.discard();
             return;
         }
 
@@ -81,6 +81,5 @@ public class FakeExperienceOrbEntity extends ExperienceOrbEntity {
 
     @Override
     public void onPlayerCollision(PlayerEntity player) {
-        // отключаем подбор
     }
 }

@@ -26,11 +26,9 @@ public class OriginstransgenderClient implements ClientModInitializer {
         Identifier stillTex = new Identifier("originstransgender", "block/memory_thread_still");
         Identifier flowTex  = new Identifier("originstransgender", "block/memory_thread_flow");
 
-        // 0xAABBCC — tint color (hex)
         FluidRenderHandlerRegistry.INSTANCE.register(OTFluids.STILL_MEMORY_THREAD, OTFluids.FLOWING_MEMORY_THREAD,
                 new SimpleFluidRenderHandler(stillTex, flowTex, 0x88CCFF));
 
-        // Make sure fluid renders in translucent layer
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), OTFluids.STILL_MEMORY_THREAD, OTFluids.FLOWING_MEMORY_THREAD);
         fakeOriginSphere = new ItemStack(Items.NETHER_STAR, 1);
     }

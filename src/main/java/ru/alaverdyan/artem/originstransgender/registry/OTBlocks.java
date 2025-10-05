@@ -3,7 +3,10 @@ package ru.alaverdyan.artem.originstransgender.registry;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.Instrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -14,6 +17,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import ru.alaverdyan.artem.originstransgender.*;
 import ru.alaverdyan.artem.originstransgender.blocks.RitualPedestalBlock;
+import ru.alaverdyan.artem.originstransgender.blocks.Umbralith;
 import ru.alaverdyan.artem.originstransgender.blocks.entites.RitualPedestalBlockEntity;
 import ru.alaverdyan.artem.originstransgender.blocks.RitualTableBlock;
 import ru.alaverdyan.artem.originstransgender.blocks.entites.RitualTableBlockEntity;
@@ -33,12 +37,19 @@ public class OTBlocks {
             AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).hardness(2f).requiresTool(),
             true
     );
-    public static final Identifier RITUAL_BLOCK_ID = new Identifier("origins-transgender", "ritual_table");
+    public static final Block UMBRALITH = register(
+            "umbralith",
+            Umbralith::new,
+            AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).strength(-1.0F, 3600000.0F).dropsNothing().allowsSpawning(Blocks::never),
+            true
+    );
+
+    public static final Identifier RITUAL_BLOCK_ID = new Identifier("originstransgender", "ritual_table");
     public static final BlockEntityType<RitualTableBlockEntity> RITUAL_TABLE_ENTITY =
             Registry.register(Registries.BLOCK_ENTITY_TYPE, RITUAL_BLOCK_ID,
                     FabricBlockEntityTypeBuilder.create(RitualTableBlockEntity::new, RITUAL_TABLE).build());
 
-    public static final Identifier RITUAL_PEDESTAL_ID = new Identifier("origins-transgender", "ritual_pedestal");
+    public static final Identifier RITUAL_PEDESTAL_ID = new Identifier("originstransgender", "ritual_pedestal");
     public static final BlockEntityType<RitualPedestalBlockEntity> RITUAL_PEDESTAL_ENTITY =
             Registry.register(Registries.BLOCK_ENTITY_TYPE, RITUAL_PEDESTAL_ID,
                     FabricBlockEntityTypeBuilder.create(RitualPedestalBlockEntity::new, RITUAL_PEDESTAL).build());

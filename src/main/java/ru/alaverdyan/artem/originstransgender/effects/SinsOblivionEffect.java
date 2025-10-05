@@ -5,11 +5,14 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
+import ru.alaverdyan.artem.originstransgender.Originstransgender;
 
-public class BaldnessEffect extends StatusEffect {
-    public BaldnessEffect() {
-        super(StatusEffectCategory.HARMFUL, 0xEECBAD);
+public class SinsOblivionEffect extends StatusEffect {
+    public SinsOblivionEffect() {
+        super(StatusEffectCategory.HARMFUL, 0x252525);
         this.addAttributeModifier(EntityAttributes.GENERIC_LUCK,
                 "7107DE5E-7CE8-4030-940E-514C1F160890",
                 -2.0, EntityAttributeModifier.Operation.ADDITION);
@@ -17,7 +20,7 @@ public class BaldnessEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return duration % 40 == 0;
+        return duration % 20 == 0;
     }
 
     @Override
@@ -25,11 +28,6 @@ public class BaldnessEffect extends StatusEffect {
         if (entity.getWorld().isClient) {
             return;
         }
-        ItemStack helmet = entity.getEquippedStack(net.minecraft.entity.EquipmentSlot.HEAD);
-        if (!helmet.isEmpty()) {
-            entity.dropStack(helmet);
-            entity.equipStack(net.minecraft.entity.EquipmentSlot.HEAD, ItemStack.EMPTY);
-            entity.sendMessage(net.minecraft.text.Text.translatable("msg.losthelmet"));
-        }
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 2));
     }
 }

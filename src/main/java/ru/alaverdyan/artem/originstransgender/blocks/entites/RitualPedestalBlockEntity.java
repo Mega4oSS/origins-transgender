@@ -45,17 +45,15 @@ public class RitualPedestalBlockEntity extends BlockEntity implements Implemente
         return inventory;
     }
 
-    // Сериализация данных
     @Override
     public void writeNbt(NbtCompound view) {
         super.writeNbt(view);
-        Inventories.writeNbt(view, inventory); // сохраняем инвентарь
+        Inventories.writeNbt(view, inventory);
         view.putBoolean("tableEmpty", tableEmpty);
         view.putBoolean("animationStarted", animationStarted);
         view.putBoolean("xAxis", xAxis);
         view.putInt("ritualStage", ritualStage);
         view.putInt("stageTicks", stageTicks);
-        //view.putFloat("deltaTime", deltaTime);
         view.putInt("ritualCenterX", centerPosition.getX());
         view.putInt("ritualCenterY", centerPosition.getY());
         view.putInt("ritualCenterZ", centerPosition.getZ());
@@ -64,14 +62,13 @@ public class RitualPedestalBlockEntity extends BlockEntity implements Implemente
     @Override
     public void readNbt(NbtCompound view) {
         super.readNbt(view);
-        Inventories.readNbt(view, inventory); // загружаем инвентарь
+        Inventories.readNbt(view, inventory);
         tableEmpty = view.getBoolean("tableEmpty");
         xAxis = view.getBoolean("xAxis");
         ritualStage = view.getInt("ritualStage");
         stageTicks = view.getInt("stageTicks");
         centerPosition = new BlockPos(view.getInt("ritualCenterX"), view.getInt("ritualCenterY"), view.getInt("ritualCenterZ"));
         animationStarted = view.getBoolean("animationStarted");
-        //deltaTime = view.getFloat("deltaTime");
     }
 
     public void setTableEmpty(boolean tableEmpty) {
@@ -83,9 +80,9 @@ public class RitualPedestalBlockEntity extends BlockEntity implements Implemente
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, RitualPedestalBlockEntity be) {
-        if (world == null || world.isClient) return; // логика только на сервере
+        if (world == null || world.isClient) return;
 
-        if (be.ritualStage <= 0) return; // неактивен
+        if (be.ritualStage <= 0) return;
 
         be.stageTicks++;
         boolean changed = false;
@@ -122,20 +119,15 @@ public class RitualPedestalBlockEntity extends BlockEntity implements Implemente
                 }
                 break;
             case 7:
-                // STAGE7 — мгновенный: по желанию можно finishRitual() сразу
-                //be.finishRitual();
                 changed = true;
                 break;
         }
 
 
         if (changed) {
-            be.stageTicks = 0; // если advanceStage не сбросил
+            be.stageTicks = 0;
             be.markDirtyAndSync(world);
         } else {
-            // иногда стоит синхронизировать stageTicks реже (например, каждые 5 тиков),
-            // но для точной синхронизации анимаций можно шлём чаще.
-            // Чтобы снизить нагрузку, можно шлём update каждые N тиков:
             if (be.stageTicks % 5 == 0) be.markDirtyAndSync(world);
         }
     }
@@ -154,7 +146,7 @@ public class RitualPedestalBlockEntity extends BlockEntity implements Implemente
             case 4: ritualStage = 5; break;
             case 5: ritualStage = 6; break;
             case 6: ritualStage = 7; break;
-            case 7: ritualStage = 0; break; // закончилось
+            case 7: ritualStage = 0; break;
             default: ritualStage = 0; break;
         }
         stageTicks = 0;
@@ -163,9 +155,9 @@ public class RitualPedestalBlockEntity extends BlockEntity implements Implemente
 
     public void markDirtyAndSync(World world) {
         if (world == null || world.isClient) return;
-        this.markDirty(); // пометить для сохранения
+        this.markDirty();
         BlockState state = world.getBlockState(this.pos);
-        world.updateListeners(this.pos, state, state, 3); // шлёт обновление блока и BE клиентам
+        world.updateListeners(this.pos, state, state, 3);
     }
 
     public void setRitualStage(int ritualStage) {
@@ -176,7 +168,6 @@ public class RitualPedestalBlockEntity extends BlockEntity implements Implemente
         this.stageTicks = stageTicks;
     }
 
-    // Синхронизация данных на клиенте
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);

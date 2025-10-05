@@ -8,12 +8,13 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import ru.alaverdyan.artem.originstransgender.Originstransgender;
 import ru.alaverdyan.artem.originstransgender.entities.FakeExperienceOrbEntity;
 
 public class OTEntities {
     public static final EntityType<FakeExperienceOrbEntity> FAKE_XP_ORB = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier("mymod", "fake_xp_orb"),
+            new Identifier(Originstransgender.MOD_ID, "fake_xp_orb"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<FakeExperienceOrbEntity> type, World world) ->
                     new FakeExperienceOrbEntity(type, world)
             ).dimensions(EntityDimensions.fixed(0.25F, 0.25F)).build()

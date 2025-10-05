@@ -22,7 +22,7 @@ public class Hallucinate {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 literal("hallucinate")
-                        .requires(source -> source.hasPermissionLevel(2)) // Operator only
+                        .requires(source -> source.hasPermissionLevel(2))
                         .then(argument("target", EntityArgumentType.players())
                                 .executes(Hallucinate::executeHallucinatePlayer))
         );
@@ -32,11 +32,8 @@ public class Hallucinate {
         Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(context, "target");
 
         for (ServerPlayerEntity player : targets) {
-            // PLACEHOLDER: Apply your custom hallucination effect here
             player.sendMessage(Text.translatable("msg.reality_warp").formatted(Formatting.DARK_PURPLE), false);
-            // Example: Apply nausea for 15 seconds (15 sec * 20 ticks/sec = 300 ticks)
-            // player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 300, 0));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 300, 2)); // 15 seconds
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 300, 2));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 300, 2));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 2));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 300, 2));
@@ -45,6 +42,6 @@ public class Hallucinate {
             player.addStatusEffect(new StatusEffectInstance(Originstransgender.SHADOW_GAME, 300, 2));
         }
         context.getSource().sendFeedback(() -> Text.translatable("msg.effect_targeted_applied"), true);
-        return targets.size(); // Return number of affected players
+        return targets.size();
     }
 }

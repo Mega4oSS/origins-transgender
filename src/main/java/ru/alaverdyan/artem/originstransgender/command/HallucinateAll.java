@@ -18,7 +18,7 @@ public class HallucinateAll {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 literal("hallucinateAll")
-                        .requires( cs -> cs.hasPermissionLevel(2)) // Operator only
+                        .requires( cs -> cs.hasPermissionLevel(2))
                         .executes(HallucinateAll::executeHallucinateAll)
         );
     }
@@ -26,10 +26,8 @@ public class HallucinateAll {
     public static int executeHallucinateAll(CommandContext<ServerCommandSource>  context) {
         try {
             for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList()) {
-                // PLACEHOLDER: Apply your custom hallucination effect here
                 player.sendMessage(Text.translatable("msg.reality_warp").formatted(Formatting.DARK_PURPLE), false);
-                // Example: You could apply a potion effect like nausea as a placeholder
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 300, 2)); // 15 seconds
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 300, 2));
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 300, 2));
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 2));
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 300, 2));
@@ -38,10 +36,10 @@ public class HallucinateAll {
                 player.addStatusEffect(new StatusEffectInstance(Originstransgender.SHADOW_GAME, 300, 2));
             }
             context.getSource().sendFeedback(() -> Text.translatable("msg.effect_applied"), true);
-            return 1; // Success
+            return 1;
         } catch (Exception e) {
             context.getSource().sendError(Text.translatable("msg.effect_failed"));
-            return 0; // Failure
+            return 0;
         }
     }
 }

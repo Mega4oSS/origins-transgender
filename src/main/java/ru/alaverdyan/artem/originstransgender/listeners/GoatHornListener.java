@@ -24,27 +24,23 @@ public class GoatHornListener {
 
     private static TypedActionResult<ItemStack> onUseItem(PlayerEntity player, World world, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
-        System.out.println("BEGIN");
-        // Быстрая фильтрация по типу предмета
+        //System.out.println("BEGIN");
         if (!stack.isOf(Items.GOAT_HORN)) return TypedActionResult.pass(stack);
-        System.out.println("GOAT_HORN");
-
-        // Попробуем вытащить информацию о инструменте из NBT
+        //System.out.println("GOAT_HORN");
         NbtCompound nbt = stack.getNbt();
         if (nbt != null) {
-            System.out.println("NBT_NOT_NULL");
-            // 2) Вариант с полем "instrument" — как compound { sound_event: "...", ... }
+            //System.out.println("NBT_NOT_NULL");
             if (nbt.contains("instrument")) {
-                System.out.println("NBT_CONTAINS_INSTRUMENT");
-                System.out.println("INSTRUMENT: " + nbt.getString("instrument"));
+                //System.out.println("NBT_CONTAINS_INSTRUMENT");
+                //System.out.println("INSTRUMENT: " + nbt.getString("instrument"));
 
                 if(nbt.getString("instrument").equals("minecraft:ponder_goat_horn") || nbt.getString("instrument").equals("ponder_goat_horn")) {
-                    System.out.println("NBT_RIGHT");
+                    //System.out.println("NBT_RIGHT");
                     if (!world.isClient) {
-                        System.out.println("NBT_SERVER_SIDE");
+                        //System.out.println("NBT_SERVER_SIDE");
                         BlockPos pos = isInsideRitualCircle(player, world, 3);
                         if (pos != null) {
-                            System.out.println("NBT_IN_CIRCLE");
+                            //System.out.println("NBT_IN_CIRCLE");
                             ((RitualTableBlock) world.getBlockState(pos).getBlock()).tryInitRitual(player, world, pos);
                         }
                     }
@@ -52,7 +48,6 @@ public class GoatHornListener {
             }
         }
 
-        // дальше — либо pass, либо success в зависимости от желаемого поведения
         return TypedActionResult.pass(stack);
     }
 

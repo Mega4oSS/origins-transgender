@@ -45,15 +45,14 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
     private PlayerEntity playerUsed;
 
     public static final int TICKS_PER_SECOND = 20;
-    public static final int STAGE1_TICKS = 1 * TICKS_PER_SECOND;           // Кольцо
-    public static final int STAGE2_TICKS = 3 * TICKS_PER_SECOND;           // Подъём
-    public static final int STAGE3_TICKS = 2 * TICKS_PER_SECOND;           // Линии (1s линии + 1s движение)
-    public static final int STAGE3_FIRST_TICKS = 1 * TICKS_PER_SECOND;     // Первая секунда (линии)
-    public static final int STAGE3_SECOND_TICKS = 1 * TICKS_PER_SECOND;    // Вторая секунда (полет)
-    public static final int STAGE4_TICKS = (int)(2.5f * TICKS_PER_SECOND); // Сфера дыма
-    public static final int STAGE5_TICKS = (int)(1.5f * TICKS_PER_SECOND); // Дренаж опыта
-    public static final int STAGE6_TICKS = 1 * TICKS_PER_SECOND;           // Коллапс
-// STAGE7 мгновенно — можно обработать сразу при advance
+    public static final int STAGE1_TICKS = 1 * TICKS_PER_SECOND;
+    public static final int STAGE2_TICKS = 3 * TICKS_PER_SECOND;
+    public static final int STAGE3_TICKS = 2 * TICKS_PER_SECOND;
+    public static final int STAGE3_FIRST_TICKS = 1 * TICKS_PER_SECOND;
+    public static final int STAGE3_SECOND_TICKS = 1 * TICKS_PER_SECOND;
+    public static final int STAGE4_TICKS = (int)(2.5f * TICKS_PER_SECOND);
+    public static final int STAGE5_TICKS = (int)(1.5f * TICKS_PER_SECOND);
+    public static final int STAGE6_TICKS = 1 * TICKS_PER_SECOND;
 
 
     public RitualTableBlockEntity(BlockPos pos, BlockState state) {
@@ -72,11 +71,10 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
         return inventory;
     }
 
-    // Сериализация данных
     @Override
     public void writeNbt(NbtCompound view) {
         super.writeNbt(view);
-        Inventories.writeNbt(view, inventory); // сохраняем инвентарь
+        Inventories.writeNbt(view, inventory);
         view.putBoolean("tableEmpty", tableEmpty);
         view.putBoolean("animationStarted", animationStarted);
         view.putInt("ritualStage", ritualStage);
@@ -86,7 +84,7 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
     @Override
     public void readNbt(NbtCompound view) {
         super.readNbt(view);
-        Inventories.readNbt(view, inventory); // загружаем инвентарь
+        Inventories.readNbt(view, inventory);
         tableEmpty = view.getBoolean("tableEmpty");
         ritualStage = view.getInt("ritualStage");
         stageTicks = view.getInt("stageTicks");
@@ -101,7 +99,6 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
         return tableEmpty;
     }
 
-    // Синхронизация данных на клиенте
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
@@ -113,7 +110,7 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, RitualTableBlockEntity be) {
-        if (world == null || world.isClient) return; // логика только на сервере
+        if (world == null || world.isClient) return;
         if(be.animationStarted) {
             be.ritualStage++;
             if (be.ritualStage > 3) {
@@ -124,7 +121,6 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
             if(be.ritualStage1 > 60 && be.stepIndex < be.maxSteps) {
                 Vec3d center = new Vec3d(pos.getX() + 0.5, pos.getY() + 2.5, pos.getZ() + 0.5);
 
-                // 4 стартовые точки на расстоянии 4 блоков
                 Vec3d[] starts = new Vec3d[]{
                         center.add(2.7, -0.3, 0),  // +X
                         center.add(-2.7, -0.3, 0), // -X
@@ -132,7 +128,6 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
                         center.add(0, -0.3, -2.7)  // -Z
                 };
 
-                // рисуем по одной точке на каждой линии
                 for (Vec3d start : starts) {
                     spawnStepParticle((ServerWorld) world, start, center, ParticleTypes.END_ROD, be.stepIndex, be.maxSteps);
                 }
@@ -144,7 +139,6 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
 
                 double t = (be.stepIndex - 20) / (double) 50;
 
-                // равномерная выборка точек на сфере (через золотое сечение)
                 double phi = Math.acos(1 - 2 * t);
                 double theta = Math.PI * (1 + Math.sqrt(5)) * (be.stepIndex - 20);
 
@@ -172,7 +166,6 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
                         world.getRegistryManager()
                                 .get(RegistryKeys.DAMAGE_TYPE)
                                 .entryOf(OTDamageTypes.RITUAL_DAMAGE));
-                //be.playerUsed.kill()
                 be.playerUsed.damage(damageSource, Float.MAX_VALUE);
                 if(be.futureOrigin != null) {
                     OriginUtils.setPlayerOrigin((ServerPlayerEntity) be.playerUsed, Identifier.of("origins", "origin"), be.futureOrigin);
@@ -202,12 +195,10 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
     public static void spawnFakeOrb(ServerWorld world, PlayerEntity player, BlockPos targetPos) {
         Random random = world.random;
 
-        // рандомное смещение вокруг игрока (спавн орба)
         double spawnX = player.getX() + (random.nextDouble() - 0.5) * 0.5; // ±0.25
         double spawnY = player.getY() + 1.0 + (random.nextDouble() - 0.5) * 0.5; // ±0.25
         double spawnZ = player.getZ() + (random.nextDouble() - 0.5) * 0.5; // ±0.25
 
-        // рандомное смещение вокруг блока (цель орба)
         double targetX = targetPos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.5; // ±0.25
         double targetY = targetPos.getY() + 0.5 + (random.nextDouble() - 0.5) * 0.5; // ±0.25
         double targetZ = targetPos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.5; // ±0.25
@@ -245,7 +236,7 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
             case 4: ritualStage = 5; break;
             case 5: ritualStage = 6; break;
             case 6: ritualStage = 7; break;
-            case 7: ritualStage = 0; break; // закончилось
+            case 7: ritualStage = 0; break;
             default: ritualStage = 0; break;
         }
         stageTicks = 0;
@@ -254,9 +245,9 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
 
     public void markDirtyAndSync(World world) {
         if (world == null || world.isClient) return;
-        this.markDirty(); // пометить для сохранения
+        this.markDirty();
         BlockState state = world.getBlockState(this.pos);
-        world.updateListeners(this.pos, state, state, 3); // шлёт обновление блока и BE клиентам
+        world.updateListeners(this.pos, state, state, 3);
     }
 
     public int getRitualStage() {
@@ -294,7 +285,7 @@ public class RitualTableBlockEntity extends BlockEntity implements ImplementedIn
     public static void spawnStepParticle(ServerWorld world, Vec3d start, Vec3d end, ParticleEffect particle, int stepIndex, int maxSteps) {
         if(stepIndex > maxSteps) return;
         double t = (double) stepIndex / (double) maxSteps;
-        Vec3d pos = start.lerp(end, t); // точка между стартом и центром
+        Vec3d pos = start.lerp(end, t);
         world.spawnParticles(particle, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
     }
 

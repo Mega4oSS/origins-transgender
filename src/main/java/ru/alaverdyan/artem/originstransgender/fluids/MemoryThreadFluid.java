@@ -1,4 +1,3 @@
-// package: com.origins.transgender
 package ru.alaverdyan.artem.originstransgender.fluids;
 
 import net.minecraft.block.BlockState;
@@ -88,7 +87,6 @@ public class MemoryThreadFluid extends FlowableFluid {
         return 0;
     }
 
-    // Вложенные классы для текущей и текучей варианта жидкости
     public static class Flowing extends MemoryThreadFluid {
         @Override
         protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {

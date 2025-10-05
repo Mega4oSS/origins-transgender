@@ -27,11 +27,11 @@ public class HairKnife extends Item {
             if(Originstransgender.usageMap.get(user.getUuid()) > 5) {
                 user.sendMessage(Text.translatable("msg.baldness.started"), true);
                 user.addStatusEffect(new StatusEffectInstance(
-                        Originstransgender.BALDNESS, // сам эффект
-                        20 * 30,              // длительность в тиках (30 секунд)
-                        0,                    // уровень (0 = I)
-                        false,                // ambient (фон, без частиц)
-                        true                  // showParticles
+                        Originstransgender.BALDNESS,
+                        20 * 30,
+                        0,
+                        false,
+                        true
                 ));
                 Originstransgender.usageMap.put(user.getUuid(), 0);
             }

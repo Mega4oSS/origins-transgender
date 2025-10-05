@@ -18,8 +18,7 @@ import static ru.alaverdyan.artem.originstransgender.Originstransgender.countTic
 
 public class ShadowGameEffect extends StatusEffect {
     public ShadowGameEffect() {
-        super(StatusEffectCategory.HARMFUL, 0xEECBAD); // цвет эффекта
-        // Можно добавить дебафф к удаче ради юмора
+        super(StatusEffectCategory.HARMFUL, 0x696969);
         this.addAttributeModifier(EntityAttributes.GENERIC_LUCK,
                 "7107DE5E-7CE8-4030-940E-514C1F160890",
                 -2.0, EntityAttributeModifier.Operation.ADDITION);
@@ -27,7 +26,6 @@ public class ShadowGameEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        // Обновление каждые 40 тиков (2 секунды)
         return duration % 5 == 0;
 
     }
@@ -35,8 +33,6 @@ public class ShadowGameEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         World world = entity.getWorld();
-
-        // Проверяем, что мы на серверной логической стороне :cite[2]:cite[5]
         if (world.isClient) {
             return;
         }
@@ -44,9 +40,8 @@ public class ShadowGameEffect extends StatusEffect {
         double angle = 0;
         if(entity instanceof PlayerEntity player) {
             countTicker.put(player.getUuid(), countTicker.getOrDefault(player.getUuid(), 0) + 1);
-             angle = Math.toRadians(countTicker.get(player.getUuid()) * 10); // 10 градусов за тик
+             angle = Math.toRadians(countTicker.get(player.getUuid()) * 10);
         }
-        // Вычисляем позицию на окружности (радиус 3 блока)
         double radius = 2 + world.random.nextDouble() * 3;
         double x = entity.getX() + radius * Math.cos(angle);
         double y = entity.getY() + 5;
@@ -58,7 +53,6 @@ public class ShadowGameEffect extends StatusEffect {
             soundEvent = world.getBlockState(soundPos.down(i)).getSoundGroup().getStepSound();
             break;
         }
-        // Выбираем случайный звук шагов:cite[9]
         double angle2 = world.random.nextDouble() * 2 * Math.PI;
 
         double x2 = entity.getX() + radius * Math.cos(angle2);
@@ -66,23 +60,22 @@ public class ShadowGameEffect extends StatusEffect {
         double z2 = entity.getZ() + radius * Math.sin(angle2);
 
         BlockPos soundPos2 = new BlockPos((int)x2, (int)y2, (int)z2);
-        // Воспроизводим звук только для целевого игрока:cite[4]
         world.playSound(
-                null, // source - без источника-сущности
-                soundPos, // pos - позиция звука
-                soundEvent, // sound - выбранный звук
-                SoundCategory.AMBIENT, // category - категория "окружающие звуки":cite[4]
-                0.7f, // volume - громкость
-                0.9f + world.random.nextFloat() * 0.2f // pitch - высота тона
+                null,
+                soundPos,
+                soundEvent,
+                SoundCategory.AMBIENT,
+                0.7f,
+                0.9f + world.random.nextFloat() * 0.2f
         );
 
         world.playSound(
-                null, // source - без источника-сущности
-                soundPos2, // pos - позиция звука
-                Originstransgender.CAVE6_SOUND, // sound - выбранный звук
-                SoundCategory.AMBIENT, // category - категория "окружающие звуки":cite[4]
-                0.1f, // volume - громкость
-                0.9f + world.random.nextFloat() * 0.2f // pitch - высота тона
+                null,
+                soundPos2,
+                Originstransgender.CAVE6_SOUND,
+                SoundCategory.AMBIENT,
+                0.1f,
+                0.9f + world.random.nextFloat() * 0.2f
         );
     }
 }
